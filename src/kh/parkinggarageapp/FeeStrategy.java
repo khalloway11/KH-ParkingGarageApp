@@ -11,5 +11,13 @@ package kh.parkinggarageapp;
  * @author khalloway
  */
 public interface FeeStrategy {
+    /**
+     * calculates and returns the fee owed
+     * @param startHour
+     * @param startMin
+     * @param endHour
+     * @param endMin
+     * @return 
+     */
     public abstract double calculateFee(double startHour, double startMin, double endHour, double endMin);
 }
