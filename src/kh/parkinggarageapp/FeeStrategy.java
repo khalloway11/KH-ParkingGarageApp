@@ -20,4 +20,7 @@ public interface FeeStrategy {
      * @return 
      */
     public abstract double calculateFee(double startHour, double startMin, double endHour, double endMin);
+    public abstract String getName();
+     public double getTimeCharged(double startHour, double startMin, double endHour, double endMin);
+     public double getTimeParked(double startHour, double startMin, double endHour, double endMin);
 }

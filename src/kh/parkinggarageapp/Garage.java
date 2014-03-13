@@ -56,8 +56,9 @@ public class Garage {
                 Car[] temp = new Car[cars.length + 1];
                 System.arraycopy(cars, 0, temp, 0, cars.length);
                 temp[cars.length] = c;
+                cars = temp;
             }else if(findEmptySpot() == -2){
-                
+                tellerStrat.sendFullMessage();
             } else {
                 cars[findEmptySpot()] = c;
             }
@@ -98,8 +99,8 @@ public class Garage {
     }
     
     /**
-     * find an empty index in the cars array, return -1 if none, return -2 if filled to capacity
-     * @return 
+     * find an empty index in the cars array
+     * @return -1 if none, return -2 if filled to capacity
      */
     private int findEmptySpot(){
         for(int i = 0; i < cars.length; i++){

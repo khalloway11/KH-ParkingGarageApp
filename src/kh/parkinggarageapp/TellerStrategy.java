@@ -24,4 +24,6 @@ public interface TellerStrategy {
      * @param t 
      */
     public abstract void claimTicket(Car c, double endHour, double endMin, FeeStrategy fee);
+    public void sendFullMessage();
+    public void sendTowedMessage();
 }

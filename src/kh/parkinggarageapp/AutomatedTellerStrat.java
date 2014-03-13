@@ -11,17 +11,19 @@ package kh.parkinggarageapp;
  * @author Keiji
  */
 public class AutomatedTellerStrat implements TellerStrategy {
-    private static double runningTotal;
+    private static double runningTotalCharged;
+    private static double runningTotalTime;
     private OutputStrategy outputStrat;
     
-    public AutomatedTellerStrat(){
-        runningTotal = 0;
+    public AutomatedTellerStrat(OutputStrategy output){
+        runningTotalCharged = 0;
+        runningTotalTime = 0;
+        outputStrat = output;
     }
 
     /**
      * punches in a ticket and issues it to the car
      * @param c
-     * @param t
      * @param startHour
      * @param startMin 
      */
@@ -38,28 +40,48 @@ public class AutomatedTellerStrat implements TellerStrategy {
      * @param c
      * @param endHour
      * @param endMin 
+     * @param fee
      */
     public void claimTicket(Car c, double endHour, double endMin, FeeStrategy fee){
         c.getTicket().punchOut(endHour, endMin);
         double collected = fee.calculateFee(c.getTicket().getStartHour(), c.getTicket().getStartMin(), endHour, endMin);
-        runningTotal += collected;
-        outputStrat.makeTicketOutput(c.getId(), collected, runningTotal);
+        if(collected == -1){
+            sendTowedMessage();
+            return;
+        }
+        runningTotalCharged += collected;
+        runningTotalTime += fee.getTimeParked(c.getTicket().getStartHour(), c.getTicket().getStartMin(), endHour, endMin);
+        outputStrat.makeTicketOutput(c.getId(), fee.getName(), collected);
+        outputStrat.makeReportOutput(fee.getName(), runningTotalCharged, runningTotalTime);
     }
     
     public void sendFullMessage(){
         outputStrat.makeOutput("No spaces available");
     }
     
+    public void sendTowedMessage(){
+        outputStrat.makeOutput("Car was towed for staying more than 24 hours.");
+    }
+    
     /**
      * getters and setters
      */
-    public static double getRunningTotal() {
-        return runningTotal;
+    public static double getRunningTotalCharged() {
+        return runningTotalCharged;
     }
 
-    public static void setRunningTotal(double runningTotal) {
-        AutomatedTellerStrat.runningTotal = runningTotal;
+    public static void setRunningTotalCharged(double runningTotal) {
+        AutomatedTellerStrat.runningTotalCharged = runningTotal;
     }
+
+    public static double getRunningTotalTime() {
+        return runningTotalTime;
+    }
+
+    public static void setRunningTotalTime(double runningTotalTime) {
+        AutomatedTellerStrat.runningTotalTime = runningTotalTime;
+    }
+    
     
     
 }
