@@ -7,7 +7,8 @@
 package kh.parkinggarageapp;
 
 /**
- *
+ * output strategy for console output
+ * prints receipts, reports, and other messages to a console
  * @author Keiji
  */
 public class ConsoleOutputStrat implements OutputStrategy {

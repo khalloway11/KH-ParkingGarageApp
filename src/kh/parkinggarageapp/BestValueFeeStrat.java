@@ -7,7 +7,9 @@
 package kh.parkinggarageapp;
 
 /**
- *
+ * FeeStrategy for Best Value parking garage
+ * contains constants, no instance variables
+ * 
  * @author Keiji
  */
 public class BestValueFeeStrat implements FeeStrategy {

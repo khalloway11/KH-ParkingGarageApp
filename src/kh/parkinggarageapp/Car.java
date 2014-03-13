@@ -7,7 +7,7 @@
 package kh.parkinggarageapp;
 
 /**
- *
+ * a car class that contains an id and a ticket
  * @author Keiji
  */
 public class Car {

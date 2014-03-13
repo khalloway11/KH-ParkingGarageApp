@@ -7,7 +7,8 @@
 package kh.parkinggarageapp;
 
 /**
- *
+ * TellerStrategy for automated tellers.
+ * has an output strategy for delivering output
  * @author Keiji
  */
 public class AutomatedTellerStrat implements TellerStrategy {

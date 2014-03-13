@@ -7,7 +7,8 @@
 package kh.parkinggarageapp;
 
 /**
- *
+ * interface for tellers
+ * issues and claims tickets, and sends other special messages
  * @author Keiji
  */
 public interface TellerStrategy {

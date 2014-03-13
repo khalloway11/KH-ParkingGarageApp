@@ -7,7 +7,8 @@
 package kh.parkinggarageapp;
 
 /**
- *
+ * keeps track of cars entering and exiting
+ * has a teller and a fee strategy
  * @author Keiji
  */
 public class Garage {

@@ -7,7 +7,8 @@
 package kh.parkinggarageapp;
 
 /**
- *
+ * calculates the fee owed, and the amount of time spent and charged
+ * also returns the name of the company
  * @author khalloway
  */
 public interface FeeStrategy {

@@ -7,7 +7,7 @@
 package kh.parkinggarageapp;
 
 /**
- *
+ * main class simulates parking and exiting cars at two different garages
  * @author khalloway
  */
 public class KHParkingGarageApp {

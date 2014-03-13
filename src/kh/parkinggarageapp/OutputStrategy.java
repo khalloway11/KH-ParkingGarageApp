@@ -7,7 +7,8 @@
 package kh.parkinggarageapp;
 
 /**
- *
+ * generates ticket receipts and daily report output. 
+ * also accepts special messages for output
  * @author Keiji
  */
 public interface OutputStrategy {

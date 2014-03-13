@@ -7,7 +7,8 @@
 package kh.parkinggarageapp;
 
 /**
- *
+ * fee strategy for Thrifty Parking Garage
+ * contains constants, no instance variables
  * @author Keiji
  */
 public class ThriftyFeeStrat implements FeeStrategy {

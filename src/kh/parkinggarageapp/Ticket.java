@@ -7,7 +7,7 @@
 package kh.parkinggarageapp;
 
 /**
- *
+ * Holds timestamp information for when a car enters or leaves the garage
  * @author khalloway
  */
 public class Ticket {
