@@ -15,12 +15,12 @@ public class Car {
     private String id;
     
     /**
-     * every car has an ID and a ticket
+     * every car has an ID and can have a ticket
      * @param t
      * @param id 
      */
-    public Car(Ticket t, String id){
-        this.setTicket(t);
+    public Car(String id){
+        this.setTicket(null);
         this.setId(id);
     }
 

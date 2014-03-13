@@ -12,7 +12,6 @@ package kh.parkinggarageapp;
  */
 public class AutomatedTellerStrat implements TellerStrategy {
     private static double runningTotal;
-    private FeeStrategy feeStrat;
     private OutputStrategy outputStrat;
     
     public AutomatedTellerStrat(){
@@ -20,16 +19,18 @@ public class AutomatedTellerStrat implements TellerStrategy {
     }
 
     /**
-     * creates a new ticket, punches it in, and issues it to a car
+     * punches in a ticket and issues it to the car
      * @param c
      * @param t
      * @param startHour
      * @param startMin 
      */
-    public void issueTicket(Car c, Ticket t, double startHour, double startMin, FeeStrategy fee){
-        t = new Ticket(fee);
-        t.punchIn(startHour, startMin);
-        c.setTicket(t);
+    public void issueTicket(Car c, double startHour, double startMin){
+        if(c.getTicket() == null){
+            Ticket t = new Ticket();
+            t.punchIn(startHour, startMin);
+            c.setTicket(t);
+        }
     }
     
     /**
@@ -38,11 +39,15 @@ public class AutomatedTellerStrat implements TellerStrategy {
      * @param endHour
      * @param endMin 
      */
-    public void claimTicket(Car c, double endHour, double endMin){
+    public void claimTicket(Car c, double endHour, double endMin, FeeStrategy fee){
         c.getTicket().punchOut(endHour, endMin);
-        double collected = feeStrat.calculateFee(c.getTicket().getStartHour(), c.getTicket().getStartMin(), endHour, endMin);
+        double collected = fee.calculateFee(c.getTicket().getStartHour(), c.getTicket().getStartMin(), endHour, endMin);
         runningTotal += collected;
         outputStrat.makeTicketOutput(c.getId(), collected, runningTotal);
+    }
+    
+    public void sendFullMessage(){
+        outputStrat.makeOutput("No spaces available");
     }
     
     /**

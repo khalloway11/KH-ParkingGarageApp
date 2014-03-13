@@ -16,12 +16,12 @@ public interface TellerStrategy {
      * @param c
      * @param t 
      */
-    public abstract void issueTicket(Car c, Ticket t, double startHour, double startMin, FeeStrategy fee);
+    public abstract void issueTicket(Car c, double startHour, double startMin);
     
     /**
      * claims a ticket from a car and collects the fee
      * @param c
      * @param t 
      */
-    public abstract void claimTicket(Car c, double endHour, double endMin);
+    public abstract void claimTicket(Car c, double endHour, double endMin, FeeStrategy fee);
 }

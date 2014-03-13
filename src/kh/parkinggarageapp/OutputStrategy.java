@@ -12,4 +12,5 @@ package kh.parkinggarageapp;
  */
 public interface OutputStrategy {
     public abstract void makeTicketOutput(String id, double collected, double total);
+    public abstract void makeOutput(String message);
 }

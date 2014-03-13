@@ -17,6 +17,8 @@ public class KHParkingGarageApp {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        
+        Garage BestValue = new Garage(new BestValueFeeStrat(), new AutomatedTellerStrat());
     }
     
 }
