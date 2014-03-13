@@ -11,6 +11,8 @@ package kh.parkinggarageapp;
  * @author Keiji
  */
 public class AutomatedTellerStrat implements TellerStrategy {
+    private static final String FULL_MESSAGE = "Garage filled to capacity.";
+    private static final String TOWED_MESSAGE = "Car was towed for staying over 24 hours.";
     private static double runningTotalCharged;
     private static double runningTotalTime;
     private OutputStrategy outputStrat;
@@ -53,14 +55,15 @@ public class AutomatedTellerStrat implements TellerStrategy {
         runningTotalTime += fee.getTimeParked(c.getTicket().getStartHour(), c.getTicket().getStartMin(), endHour, endMin);
         outputStrat.makeTicketOutput(c.getId(), fee.getName(), collected, fee.getTimeParked(c.getTicket().getStartHour(), c.getTicket().getStartMin(), endHour, endMin));
         outputStrat.makeReportOutput(fee.getName(), runningTotalCharged, runningTotalTime);
+        c.setTicket(null);
     }
     
     public void sendFullMessage(){
-        outputStrat.makeOutput("No spaces available");
+        outputStrat.makeOutput(FULL_MESSAGE);
     }
     
     public void sendTowedMessage(){
-        outputStrat.makeOutput("Car was towed for staying more than 24 hours.");
+        outputStrat.makeOutput(TOWED_MESSAGE);
     }
     
     /**
