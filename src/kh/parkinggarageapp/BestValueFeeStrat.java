@@ -57,7 +57,7 @@ public class BestValueFeeStrat implements FeeStrategy {
      */
     public double getTimeCharged(double startHour, double startMin, double endHour, double endMin){
         double hourDiff = endHour - startHour;
-        if(hourDiff <= 0){
+        if(hourDiff < 0){
             hourDiff += 24;
         }
         double minDiff = endMin - startMin;
@@ -81,7 +81,7 @@ public class BestValueFeeStrat implements FeeStrategy {
      */
     public double getTimeParked(double startHour, double startMin, double endHour, double endMin){
         double hourDiff = endHour - startHour;
-        if(hourDiff <= 0){
+        if(hourDiff < 0){
             hourDiff += 24;
         }
         double minDiff = endMin - startMin;

@@ -31,8 +31,8 @@ public class ThriftyFeeStrat implements FeeStrategy {
      */
     public double calculateFee(double startHour, double startMin, double endHour, double endMin){
         double time = getTimeCharged(startHour, startMin, endHour, endMin);
-        if((time < 0) || (time > MAX_HOURS)){
-            return 0;
+        if(time < 0){
+            return -1;
         }
         if(time < BASE_HOURS){
             return BASE_FEE;
@@ -51,11 +51,18 @@ public class ThriftyFeeStrat implements FeeStrategy {
      */
     public double getTimeCharged(double startHour, double startMin, double endHour, double endMin){
         double hourDiff = endHour - startHour;
+        if(hourDiff < 0){
+            hourDiff += 24;
+        }
         double minDiff = endMin - startMin;
         if(minDiff != 0){
             hourDiff++;
         }
-        return hourDiff;
+        if(hourDiff > MAX_HOURS){
+            return -1;
+        } else {
+            return hourDiff;
+        }
     }
     
     /**
@@ -68,11 +75,18 @@ public class ThriftyFeeStrat implements FeeStrategy {
      */
     public double getTimeParked(double startHour, double startMin, double endHour, double endMin){
         double hourDiff = endHour - startHour;
+        if(hourDiff < 0){
+            hourDiff += 24;
+        }
         double minDiff = endMin - startMin;
         if(minDiff != 0){
             hourDiff += (Math.abs(minDiff)/60.0);
         }
-        return hourDiff;
+        if(hourDiff > MAX_HOURS){
+            return -1;
+        } else {
+            return hourDiff;
+        }
     }
     
     public String getName(){

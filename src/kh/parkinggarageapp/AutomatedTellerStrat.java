@@ -51,7 +51,7 @@ public class AutomatedTellerStrat implements TellerStrategy {
         }
         runningTotalCharged += collected;
         runningTotalTime += fee.getTimeParked(c.getTicket().getStartHour(), c.getTicket().getStartMin(), endHour, endMin);
-        outputStrat.makeTicketOutput(c.getId(), fee.getName(), collected);
+        outputStrat.makeTicketOutput(c.getId(), fee.getName(), collected, fee.getTimeParked(c.getTicket().getStartHour(), c.getTicket().getStartMin(), endHour, endMin));
         outputStrat.makeReportOutput(fee.getName(), runningTotalCharged, runningTotalTime);
     }
     
