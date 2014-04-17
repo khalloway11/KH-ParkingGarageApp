@@ -6,6 +6,8 @@
 
 package kh.parkinggarageapp;
 
+import java.util.Calendar;
+
 /**
  * interface for tellers
  * issues and claims tickets, and sends other special messages
@@ -15,18 +17,17 @@ public interface TellerStrategy {
     /**
      * issues a ticket to a car
      * @param c the Car object to give the ticket to
-     * @param startHour the time the car entered the garage (hour)
-     * @param startMin  the time the car entered the garage (minute)
+     * @param start a Calendar object with the starting time
      */
-    public abstract void issueTicket(Car c, double startHour, double startMin);
+    public abstract void issueTicket(Car c, Calendar start, DateTimeStrat dts);
     
     /**
      * claims a ticket from a car and collects a fee according to the FeeStrategy
      * @param c the Car object to take the ticket from
-     * @param endHour the time the car exited the garage (hour)
-     * @param endMin  the time the car exited the garage (minute)
+     * @param end a Calendar object representing when the car exited
+     * @param fee the FeeStrategy being used to calculate the fee
      */
-    public abstract void claimTicket(Car c, double endHour, double endMin, FeeStrategy fee);
-    public void sendFullMessage();
-    public void sendTowedMessage();
+    public abstract void claimTicket(Car c, Calendar end, FeeStrategy fee);
+    public abstract void sendFullMessage();
+    public abstract void sendTowedMessage();
 }

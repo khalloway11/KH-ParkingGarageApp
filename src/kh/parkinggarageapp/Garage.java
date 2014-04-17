@@ -6,6 +6,8 @@
 
 package kh.parkinggarageapp;
 
+import java.util.Calendar;
+
 /**
  * keeps track of cars entering and exiting
  * has a teller and a fee strategy
@@ -17,15 +19,17 @@ public class Garage {
     private Car[] cars;
     private FeeStrategy feeStrat;
     private TellerStrategy tellerStrat;
+    private DateTimeStrat dts;
     
     /**
      * initialize an empty garage with a FeeStrategy and a TellerStrategy
      * @param feeStrat the fee strategy of the garage
      * @param tellerStrat the teller strategy of the garage
      */
-    public Garage(FeeStrategy feeStrat, TellerStrategy tellerStrat){
+    public Garage(FeeStrategy feeStrat, TellerStrategy tellerStrat, DateTimeStrat dts){
         this.setFeeStrat(feeStrat);
         this.setTellerStrat(tellerStrat);
+        this.setDts(dts);
         cars = new Car[0];
     }
     
@@ -35,9 +39,10 @@ public class Garage {
      * @param feeStrat the fee strategy of the garage
      * @param tellerStrat the teller strategy of the garage
      */
-    public Garage(int capacity, FeeStrategy feeStrat, TellerStrategy tellerStrat){
+    public Garage(int capacity, FeeStrategy feeStrat, TellerStrategy tellerStrat, DateTimeStrat dts){
         this.setFeeStrat(feeStrat);
         this.setTellerStrat(tellerStrat);
+        this.setDts(dts);
         if(capacity < MAX_CAPACITY){
             this.cars = new Car[capacity];
         } else {
@@ -48,10 +53,9 @@ public class Garage {
     /**
      * add a car to the garage
      * @param c a Car object
-     * @param hour time the car entered (hour)
-     * @param minute time the car entered (minutes)
+     * @param start Calendar object representing when the car entered the garage
      */
-    public void park(Car c, double hour, double minute){
+    public void park(Car c, Calendar start){
         if(cars.length == 0){
             cars = new Car[1];
             cars[0] = c;
@@ -67,16 +71,15 @@ public class Garage {
                 cars[findEmptySpot()] = c;
             }
         }
-        tellerStrat.issueTicket(c, hour, minute);
+        tellerStrat.issueTicket(c, start, this.getDts());
     }
     
     /**
      * remove a car from the garage
      * @param id id of the car
-     * @param hour time the car exits (hours)
-     * @param minute time the car exits (minutes)
+     * @param end Calendar object representing when the car exited
      */
-    public void exit(String id, double hour, double minute){
+    public void exit(String id, Calendar end){
         Car exit = this.searchById(id);
         if(exit == null){
             return;
@@ -84,7 +87,7 @@ public class Garage {
             for(Car c:cars){
                 if(exit.equals(c)){
                     c = null;
-                    tellerStrat.claimTicket(exit, hour, minute, feeStrat);
+                    tellerStrat.claimTicket(exit, end, feeStrat);
                     break;
                 }
             }
@@ -147,6 +150,16 @@ public class Garage {
     public void setTellerStrat(TellerStrategy tellerStrat) {
         this.tellerStrat = tellerStrat;
     }
+
+    public DateTimeStrat getDts() {
+        return dts;
+    }
+
+    public void setDts(DateTimeStrat dts) {
+        this.dts = dts;
+    }
+    
+    
     
     
 }

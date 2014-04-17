@@ -6,6 +6,8 @@
 
 package kh.parkinggarageapp;
 
+import java.util.Calendar;
+
 /**
  * TellerStrategy for automated tellers.
  * has an output strategy for delivering output
@@ -17,6 +19,7 @@ public class AutomatedTellerStrat implements TellerStrategy {
     private static double runningTotalCharged;
     private static double runningTotalTime;
     private OutputStrategy outputStrat;
+    private DateTimeStrat dts;
     
     public AutomatedTellerStrat(OutputStrategy output){
         runningTotalCharged = 0;
@@ -30,31 +33,32 @@ public class AutomatedTellerStrat implements TellerStrategy {
      * @param startHour
      * @param startMin 
      */
-    public void issueTicket(Car c, double startHour, double startMin){
+    public void issueTicket(Car c, Calendar start, DateTimeStrat dts){
         if(c.getTicket() == null){
             Ticket t = new Ticket();
-            t.punchIn(startHour, startMin);
+            t.punchIn(start);
+            t.setDts(dts);
             c.setTicket(t);
         }
     }
     
     /**
      * claims the ticket from a departing car and collects the amount owed.
-     * @param c
-     * @param endHour
-     * @param endMin 
-     * @param fee
+     * @param c Car object that is exiting
+     * @param end Calendar object of when the car exited
+     * @param fee the FeeStrategy being used to calculate the fee
      */
-    public void claimTicket(Car c, double endHour, double endMin, FeeStrategy fee){
-        c.getTicket().punchOut(endHour, endMin);
-        double collected = fee.calculateFee(c.getTicket().getStartHour(), c.getTicket().getStartMin(), endHour, endMin);
+    public void claimTicket(Car c, Calendar end, FeeStrategy fee){
+        c.getTicket().punchOut(end);
+        PunchTime p = c.getTicket().getTimePunched();
+        double collected = fee.calculateFee(p);
         if(collected == -1){
             sendTowedMessage();
             return;
         }
         runningTotalCharged += collected;
-        runningTotalTime += fee.getTimeParked(c.getTicket().getStartHour(), c.getTicket().getStartMin(), endHour, endMin);
-        outputStrat.makeTicketOutput(c.getId(), fee.getName(), collected, fee.getTimeParked(c.getTicket().getStartHour(), c.getTicket().getStartMin(), endHour, endMin));
+        runningTotalTime += fee.getTimeParked(p);
+        outputStrat.makeTicketOutput(c.getId(), fee.getName(), collected, fee.getTimeParked(p));
         outputStrat.makeReportOutput(fee.getName(), runningTotalCharged, runningTotalTime);
         c.setTicket(null);
     }

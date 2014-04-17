@@ -12,7 +12,7 @@ import java.util.Calendar;
  *
  * @author khalloway
  */
-public class DateTimeHandler implements DateTimeStrat {
+public class CalendarDateTimeHandler implements DateTimeStrat {
     //constants
     private final int SECONDS = 1000;
     private final int MINUTES = 60;
@@ -20,7 +20,7 @@ public class DateTimeHandler implements DateTimeStrat {
     
     
     //constructor
-    public DateTimeHandler(){}
+    public CalendarDateTimeHandler(){}
     
     /**
      * calculates the time spent in the garage as a difference of Calender

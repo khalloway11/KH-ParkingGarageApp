@@ -26,14 +26,12 @@ public class BestValueFeeStrat implements FeeStrategy {
     
     /**
      * Calculates the fee owed
-     * @param startHour
-     * @param startMin
-     * @param endHour
-     * @param endMin
+     * @param p PunchTime object containing the amount of time parked
      * @return fee
      */
-    public double calculateFee(double startHour, double startMin, double endHour, double endMin){
-        double time = getTimeCharged(startHour, startMin, endHour, endMin);
+    @Override
+    public double calculateFee(PunchTime p){
+        double time = getTimeCharged(p);
         if(time == -1){
             return -1;
         }
@@ -51,52 +49,42 @@ public class BestValueFeeStrat implements FeeStrategy {
     
     /**
      * returns the time to be charged, counting partial hours
-     * @param startHour
-     * @param startMin
-     * @param endHour
-     * @param endMin
+     * @param p PunchTime object containing the amount of time parked
      * @return -1 if over 24 hours, else time charged
      */
-    public double getTimeCharged(double startHour, double startMin, double endHour, double endMin){
-        double hourDiff = endHour - startHour;
-        if(hourDiff < 0){
-            hourDiff += 24;
+    public double getTimeCharged(PunchTime p){
+        int minutes = p.getMinutes();
+        int hours = p.getHours();
+        if(minutes != 0){
+            hours++;
         }
-        double minDiff = endMin - startMin;
-        if(minDiff != 0){
-            hourDiff++;
-        }
-        if(hourDiff > MAX_HOURS){
+        if(hours > MAX_HOURS){
             return -1;
         } else {
-            return hourDiff;
+            return hours;
         }
     }
     
     /**
      * returns the exact amount of time spent.
-     * @param startHour
-     * @param startMin
-     * @param endHour
-     * @param endMin
+     * @param p the PunchTime object containing the length of time parked
      * @return -1 if over 24 hours, else time parked
      */
-    public double getTimeParked(double startHour, double startMin, double endHour, double endMin){
-        double hourDiff = endHour - startHour;
-        if(hourDiff < 0){
-            hourDiff += 24;
+    @Override
+    public double getTimeParked(PunchTime p){
+        double hours = p.getHours();
+        double minutes = p.getMinutes();
+        if(minutes != 0){
+            hours += (minutes/60.0);
         }
-        double minDiff = endMin - startMin;
-        if(minDiff != 0){
-            hourDiff += (Math.abs(minDiff)/60.0);
-        }
-        if(hourDiff > MAX_HOURS){
+        if(hours > MAX_HOURS){
             return -1;
         } else {
-            return hourDiff;
+            return hours;
         }
     }
     
+    @Override
     public String getName(){
         return GARAGE_NAME;
     }

@@ -6,6 +6,8 @@
 
 package kh.parkinggarageapp;
 
+import java.util.Calendar;
+
 /**
  * calculates the fee owed, and the amount of time spent and charged
  * also returns the name of the company
@@ -14,14 +16,11 @@ package kh.parkinggarageapp;
 public interface FeeStrategy {
     /**
      * calculates and returns the fee owed
-     * @param startHour
-     * @param startMin
-     * @param endHour
-     * @param endMin
-     * @return 
+     * @param p PunchTime object containing the amount of time parked
+     * @return the fee owed
      */
-    public abstract double calculateFee(double startHour, double startMin, double endHour, double endMin);
+    public abstract double calculateFee(PunchTime p);
     public abstract String getName();
-    public abstract double getTimeCharged(double startHour, double startMin, double endHour, double endMin);
-    public abstract double getTimeParked(double startHour, double startMin, double endHour, double endMin);
+    public abstract double getTimeCharged(PunchTime p);
+    public abstract double getTimeParked(PunchTime p);
 }
