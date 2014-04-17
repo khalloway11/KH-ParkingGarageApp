@@ -12,8 +12,11 @@ package kh.parkinggarageapp;
  * @author Keiji
  */
 public class ConsoleOutputStrat implements OutputStrategy {
+    private FileManagerStrat fms;
     
-    public ConsoleOutputStrat(){}
+    public ConsoleOutputStrat(FileManagerStrat fms){
+        this.setFms(fms);
+    }
     
     /**
      * creates a receipt output
@@ -49,4 +52,14 @@ public class ConsoleOutputStrat implements OutputStrategy {
     public void makeOutput(String message){
         System.out.println(message);
     }
+
+    public FileManagerStrat getFms() {
+        return fms;
+    }
+
+    public void setFms(FileManagerStrat fms) {
+        this.fms = fms;
+    }
+    
+    
 }
