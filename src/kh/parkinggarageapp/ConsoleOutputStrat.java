@@ -25,11 +25,11 @@ public class ConsoleOutputStrat implements OutputStrategy {
      * @param collected amount of money collected
      * @param timeParked  amount of time parked
      */
+    @Override
     public void makeTicketOutput(String id, String garageName, double collected, double timeParked){
-        System.out.print("Receipt for car: " + id + "\t");
-        System.out.print(garageName + ":   ");
-        System.out.print("Hours charged: " + timeParked + "\t");
-        System.out.println("Amount collected: $" + collected + "\t");
+        String out = "Receipt for car: " + id + "\t" + garageName + ":   " + "Hours charged: " + timeParked + "\t" + "Amount collected: $" + collected;
+        System.out.println(out);
+        fms.writeTicketRecord(out);
     }
     
     /**
@@ -38,17 +38,18 @@ public class ConsoleOutputStrat implements OutputStrategy {
      * @param totalCollected the running total collected
      * @param totalParked the running total of time parked
      */
+    @Override
     public void makeReportOutput(String garageName, double totalCollected, double totalParked){
-        System.out.print("Totals for garage today:   ");
-        System.out.print(garageName + ":   ");
-        System.out.print("Hours charged: " + totalParked + "\t");
-        System.out.println("Total collected so far: $" + totalCollected);
+        String out = "Totals for garage today:   " + garageName + ":   " + "Hours charged: " + totalParked + "\t" + "Total collected so far: $" + totalCollected;
+        System.out.println(out);
+        fms.writeReportRecord(out);
     }
     
     /**
      * prints any miscellaneous messages
      * @param message a String containing a message
      */
+    @Override
     public void makeOutput(String message){
         System.out.println(message);
     }
