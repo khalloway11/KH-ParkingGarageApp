@@ -28,7 +28,7 @@ public class ThriftyFeeStrat implements FeeStrategy {
      * @param startMin
      * @param endHour
      * @param endMin
-     * @return fee
+     * @return the fee to be paid
      */
     public double calculateFee(double startHour, double startMin, double endHour, double endMin){
         double time = getTimeCharged(startHour, startMin, endHour, endMin);
@@ -48,7 +48,7 @@ public class ThriftyFeeStrat implements FeeStrategy {
      * @param startMin
      * @param endHour
      * @param endMin
-     * @return 
+     * @return the total amount of time charged. If it exceeds MAX_HOURS, return -1
      */
     public double getTimeCharged(double startHour, double startMin, double endHour, double endMin){
         double hourDiff = endHour - startHour;
@@ -72,7 +72,7 @@ public class ThriftyFeeStrat implements FeeStrategy {
      * @param startMin
      * @param endHour
      * @param endMin
-     * @return 
+     * @return the total amount of time parked. If it exceeds MAX_HOURS, return -1
      */
     public double getTimeParked(double startHour, double startMin, double endHour, double endMin){
         double hourDiff = endHour - startHour;

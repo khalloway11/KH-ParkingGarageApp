@@ -15,6 +15,13 @@ public class ConsoleOutputStrat implements OutputStrategy {
     
     public ConsoleOutputStrat(){}
     
+    /**
+     * creates a receipt output
+     * @param id car id
+     * @param garageName the name of the garage
+     * @param collected amount of money collected
+     * @param timeParked  amount of time parked
+     */
     public void makeTicketOutput(String id, String garageName, double collected, double timeParked){
         System.out.print("Receipt for car: " + id + "\t");
         System.out.print(garageName + ":   ");
@@ -22,6 +29,12 @@ public class ConsoleOutputStrat implements OutputStrategy {
         System.out.println("Amount collected: $" + collected + "\t");
     }
     
+    /**
+     * creates a report output for the garage
+     * @param garageName the name of the garage
+     * @param totalCollected the running total collected
+     * @param totalParked the running total of time parked
+     */
     public void makeReportOutput(String garageName, double totalCollected, double totalParked){
         System.out.print("Totals for garage today:   ");
         System.out.print(garageName + ":   ");
@@ -29,6 +42,10 @@ public class ConsoleOutputStrat implements OutputStrategy {
         System.out.println("Total collected so far: $" + totalCollected);
     }
     
+    /**
+     * prints any miscellaneous messages
+     * @param message a String containing a message
+     */
     public void makeOutput(String message){
         System.out.println(message);
     }

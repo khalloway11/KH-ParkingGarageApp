@@ -74,6 +74,10 @@ public class AutomatedTellerStrat implements TellerStrategy {
         return runningTotalCharged;
     }
 
+    /**
+     * 
+     * @param runningTotal set the current running total
+     */
     public static void setRunningTotalCharged(double runningTotal) {
         AutomatedTellerStrat.runningTotalCharged = runningTotal;
     }
@@ -82,6 +86,10 @@ public class AutomatedTellerStrat implements TellerStrategy {
         return runningTotalTime;
     }
 
+    /**
+     * 
+     * @param runningTotalTime set the running total of time charged
+     */
     public static void setRunningTotalTime(double runningTotalTime) {
         AutomatedTellerStrat.runningTotalTime = runningTotalTime;
     }

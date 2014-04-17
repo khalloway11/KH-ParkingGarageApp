@@ -20,8 +20,8 @@ public class Garage {
     
     /**
      * initialize an empty garage with a FeeStrategy and a TellerStrategy
-     * @param feeStrat
-     * @param tellerStrat 
+     * @param feeStrat the fee strategy of the garage
+     * @param tellerStrat the teller strategy of the garage
      */
     public Garage(FeeStrategy feeStrat, TellerStrategy tellerStrat){
         this.setFeeStrat(feeStrat);
@@ -31,8 +31,9 @@ public class Garage {
     
     /**
      * initialize a garage with predetermined capacity with a FeeStrategy and a TellerStrategy
-     * @param feeStrat
-     * @param tellerStrat 
+     * @param capacity the maximum capacity of the garage. cannot exceed MAX_CAPACITY
+     * @param feeStrat the fee strategy of the garage
+     * @param tellerStrat the teller strategy of the garage
      */
     public Garage(int capacity, FeeStrategy feeStrat, TellerStrategy tellerStrat){
         this.setFeeStrat(feeStrat);
@@ -46,7 +47,9 @@ public class Garage {
     
     /**
      * add a car to the garage
-     * @param c 
+     * @param c a Car object
+     * @param hour time the car entered (hour)
+     * @param minute time the car entered (minutes)
      */
     public void park(Car c, double hour, double minute){
         if(cars.length == 0){
@@ -69,6 +72,9 @@ public class Garage {
     
     /**
      * remove a car from the garage
+     * @param id id of the car
+     * @param hour time the car exits (hours)
+     * @param minute time the car exits (minutes)
      */
     public void exit(String id, double hour, double minute){
         Car exit = this.searchById(id);
@@ -87,8 +93,8 @@ public class Garage {
     
     /**
      * private method to look for a specific car by its ID
-     * @param id
-     * @return 
+     * @param id id of the car to search for
+     * @return the Car object if it exists in the garage, else null
      */
     private Car searchById(String id){
         for(Car c: cars){
@@ -122,6 +128,10 @@ public class Garage {
         return feeStrat;
     }
 
+    /**
+     * set the fee strategy for the garage
+     * @param feeStrat 
+     */
     public void setFeeStrat(FeeStrategy feeStrat) {
         this.feeStrat = feeStrat;
     }
@@ -130,6 +140,10 @@ public class Garage {
         return tellerStrat;
     }
 
+    /**
+     * set the teller strategy for the garage
+     * @param tellerStrat 
+     */
     public void setTellerStrat(TellerStrategy tellerStrat) {
         this.tellerStrat = tellerStrat;
     }
