@@ -12,11 +12,11 @@ package kh.parkinggarageapp;
  * @author Keiji
  */
 public class ConsoleOutputStrat implements OutputStrategy {
-    private FileManagerStrat fms;
-    
-    public ConsoleOutputStrat(FileManagerStrat fms){
-        this.setFms(fms);
-    }
+//    private FileManagerStrat fms;
+//    
+//    public ConsoleOutputStrat(FileManagerStrat fms){
+//        this.setFms(fms);
+//    }
     
     /**
      * creates a receipt output
@@ -29,7 +29,7 @@ public class ConsoleOutputStrat implements OutputStrategy {
     public void makeTicketOutput(String id, String garageName, double collected, double timeParked){
         String out = "Receipt for car: " + id + "\t" + garageName + ":   " + "Hours charged: " + timeParked + "\t" + "Amount collected: $" + collected;
         System.out.println(out);
-        fms.writeTicketRecord(out);
+        //fms.writeTicketRecord(out);
     }
     
     /**
@@ -42,7 +42,7 @@ public class ConsoleOutputStrat implements OutputStrategy {
     public void makeReportOutput(String garageName, double totalCollected, double totalParked){
         String out = "Totals for garage today:   " + garageName + ":   " + "Hours charged: " + totalParked + "\t" + "Total collected so far: $" + totalCollected;
         System.out.println(out);
-        fms.writeReportRecord(out);
+        //fms.writeReportRecord(out);
     }
     
     /**
@@ -53,14 +53,14 @@ public class ConsoleOutputStrat implements OutputStrategy {
     public void makeOutput(String message){
         System.out.println(message);
     }
-
-    public FileManagerStrat getFms() {
-        return fms;
-    }
-
-    public void setFms(FileManagerStrat fms) {
-        this.fms = fms;
-    }
+//
+//    public FileManagerStrat getFms() {
+//        return fms;
+//    }
+//
+//    public void setFms(FileManagerStrat fms) {
+//        this.fms = fms;
+//    }
     
     
 }

@@ -6,6 +6,8 @@
 
 package kh.parkinggarageapp;
 
+import java.util.Objects;
+
 /**
  * a car class that contains an id and a ticket
  * @author Keiji
@@ -38,6 +40,37 @@ public class Car {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 19 * hash + Objects.hashCode(this.t);
+        hash = 19 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Car other = (Car) obj;
+        if (!Objects.equals(this.t, other.t)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Car{" + "t=" + t + ", id=" + id + '}';
     }
     
     

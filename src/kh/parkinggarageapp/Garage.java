@@ -7,6 +7,8 @@
 package kh.parkinggarageapp;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * keeps track of cars entering and exiting
@@ -16,39 +18,23 @@ import java.util.Calendar;
 public class Garage {
     private static final int MAX_CAPACITY = 1000;
     
-    private Car[] cars;
+    private HashMap<String, Car> cars;
     private FeeStrategy feeStrat;
     private TellerStrategy tellerStrat;
     private DateTimeStrat dts;
     
     /**
-     * initialize an empty garage with a FeeStrategy and a TellerStrategy
-     * @param feeStrat the fee strategy of the garage
-     * @param tellerStrat the teller strategy of the garage
+     * initialize a garage with a HashMap for cars, a FeeStrategy, a TellerStrategy, and a DateTimeStrat
+     * @param feeStrat
+     * @param tellerStrat
+     * @param dts 
      */
     public Garage(FeeStrategy feeStrat, TellerStrategy tellerStrat, DateTimeStrat dts){
         this.setFeeStrat(feeStrat);
         this.setTellerStrat(tellerStrat);
         this.setDts(dts);
-        cars = new Car[0];
     }
     
-    /**
-     * initialize a garage with predetermined capacity with a FeeStrategy and a TellerStrategy
-     * @param capacity the maximum capacity of the garage. cannot exceed MAX_CAPACITY
-     * @param feeStrat the fee strategy of the garage
-     * @param tellerStrat the teller strategy of the garage
-     */
-    public Garage(int capacity, FeeStrategy feeStrat, TellerStrategy tellerStrat, DateTimeStrat dts){
-        this.setFeeStrat(feeStrat);
-        this.setTellerStrat(tellerStrat);
-        this.setDts(dts);
-        if(capacity < MAX_CAPACITY){
-            this.cars = new Car[capacity];
-        } else {
-            this.cars = new Car[MAX_CAPACITY];
-        }
-    }
     
     /**
      * add a car to the garage
@@ -56,22 +42,12 @@ public class Garage {
      * @param start Calendar object representing when the car entered the garage
      */
     public void park(Car c, Calendar start){
-        if(cars.length == 0){
-            cars = new Car[1];
-            cars[0] = c;
+        if(cars.size() < MAX_CAPACITY){
+            cars.put(c.getId(), c);
+            tellerStrat.issueTicket(c, start, this.getDts());
         } else {
-            if(findEmptySpot() == -1){
-                Car[] temp = new Car[cars.length + 1];
-                System.arraycopy(cars, 0, temp, 0, cars.length);
-                temp[cars.length] = c;
-                cars = temp;
-            }else if(findEmptySpot() == -2){
-                tellerStrat.sendFullMessage();
-            } else {
-                cars[findEmptySpot()] = c;
-            }
+            tellerStrat.sendFullMessage();
         }
-        tellerStrat.issueTicket(c, start, this.getDts());
     }
     
     /**
@@ -80,48 +56,12 @@ public class Garage {
      * @param end Calendar object representing when the car exited
      */
     public void exit(String id, Calendar end){
-        Car exit = this.searchById(id);
-        if(exit == null){
-            return;
-        } else {
-            for(Car c:cars){
-                if(exit.equals(c)){
-                    c = null;
-                    tellerStrat.claimTicket(exit, end, feeStrat);
-                    break;
-                }
-            }
+        if(cars.containsKey(id)){
+            Car exit = cars.get(id);
+            tellerStrat.claimTicket(exit, end, feeStrat);
+            cars.remove(id);
         }
-    }
-    
-    /**
-     * private method to look for a specific car by its ID
-     * @param id id of the car to search for
-     * @return the Car object if it exists in the garage, else null
-     */
-    private Car searchById(String id){
-        for(Car c: cars){
-            if(c.getId().equals(id)){
-                return c;
-            }
-        }
-        return null;
-    }
-    
-    /**
-     * find an empty index in the cars array
-     * @return -1 if none, return -2 if filled to capacity
-     */
-    private int findEmptySpot(){
-        for(int i = 0; i < cars.length; i++){
-            if(cars[i] == null){
-                return i;
-            }
-            if(i == MAX_CAPACITY-1){
-                return -2;
-            }
-        }
-        return -1;
+        
     }
 
     /*
@@ -157,6 +97,45 @@ public class Garage {
 
     public void setDts(DateTimeStrat dts) {
         this.dts = dts;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 73 * hash + Objects.hashCode(this.cars);
+        hash = 73 * hash + Objects.hashCode(this.feeStrat);
+        hash = 73 * hash + Objects.hashCode(this.tellerStrat);
+        hash = 73 * hash + Objects.hashCode(this.dts);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Garage other = (Garage) obj;
+        if (!Objects.equals(this.cars, other.cars)) {
+            return false;
+        }
+        if (!Objects.equals(this.feeStrat, other.feeStrat)) {
+            return false;
+        }
+        if (!Objects.equals(this.tellerStrat, other.tellerStrat)) {
+            return false;
+        }
+        if (!Objects.equals(this.dts, other.dts)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Garage{" + "cars=" + cars + ", feeStrat=" + feeStrat + ", tellerStrat=" + tellerStrat + ", dts=" + dts + '}';
     }
     
     
