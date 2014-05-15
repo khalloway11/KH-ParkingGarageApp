@@ -20,3 +20,5 @@ import java.util.Calendar;
 public interface DateTimeStrat {
     public abstract PunchTime getTimeDiff(Calendar in, Calendar out);
 }
+
+

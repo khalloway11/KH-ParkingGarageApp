@@ -7,6 +7,7 @@
 package kh.parkinggarageapp;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 /**
  * TellerStrategy for automated tellers.
@@ -74,6 +75,11 @@ public class AutomatedTellerStrat implements TellerStrategy {
     /**
      * getters and setters
      */
+    
+    /**
+     * 
+     * @return tunningTotalCharged
+     */
     public static double getRunningTotalCharged() {
         return runningTotalCharged;
     }
@@ -86,6 +92,10 @@ public class AutomatedTellerStrat implements TellerStrategy {
         AutomatedTellerStrat.runningTotalCharged = runningTotal;
     }
 
+    /**
+     * 
+     * @return runningTotalTime
+     */
     public static double getRunningTotalTime() {
         return runningTotalTime;
     }
@@ -96,6 +106,37 @@ public class AutomatedTellerStrat implements TellerStrategy {
      */
     public static void setRunningTotalTime(double runningTotalTime) {
         AutomatedTellerStrat.runningTotalTime = runningTotalTime;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 83 * hash + Objects.hashCode(this.outputStrat);
+        hash = 83 * hash + Objects.hashCode(this.dts);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final AutomatedTellerStrat other = (AutomatedTellerStrat) obj;
+        if (!Objects.equals(this.outputStrat, other.outputStrat)) {
+            return false;
+        }
+        if (!Objects.equals(this.dts, other.dts)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "AutomatedTellerStrat{" + "outputStrat=" + outputStrat + ", dts=" + dts + '}';
     }
     
     

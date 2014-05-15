@@ -7,6 +7,7 @@
 package kh.parkinggarageapp;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 /**
  * Holds timestamp information for when a car enters or leaves the garage
@@ -86,6 +87,41 @@ public class Ticket {
 
     public void setDts(DateTimeStrat dts) {
         this.dts = dts;
+    }
+
+    @Override
+    public String toString() {
+        return "Ticket{" + "start=" + start + ", end=" + end + ", dts=" + dts + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 11 * hash + Objects.hashCode(this.start);
+        hash = 11 * hash + Objects.hashCode(this.end);
+        hash = 11 * hash + Objects.hashCode(this.dts);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Ticket other = (Ticket) obj;
+        if (!Objects.equals(this.start, other.start)) {
+            return false;
+        }
+        if (!Objects.equals(this.end, other.end)) {
+            return false;
+        }
+        if (!Objects.equals(this.dts, other.dts)) {
+            return false;
+        }
+        return true;
     }
     
     

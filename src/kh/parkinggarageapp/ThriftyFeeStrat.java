@@ -21,7 +21,8 @@ public class ThriftyFeeStrat implements FeeStrategy {
 
     //constructor
     public ThriftyFeeStrat(){}
-    
+
+
     /**
      * Calculates the fee owed
      * @param p PunchTime object containing the amount of time parked
@@ -81,4 +82,6 @@ public class ThriftyFeeStrat implements FeeStrategy {
     public String getName(){
         return GARAGE_NAME;
     }
+    
+    
 }
